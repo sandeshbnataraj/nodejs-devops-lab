@@ -1,7 +1,8 @@
 {
   "spec_dir": "specs",
   "spec_files": [
-    "async.spec.js"
+    "async.spec.js",
+    "db-postgres.spec.js"
   ],
   "helpers": [
     "helpers/**/*.js"
