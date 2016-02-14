@@ -1,7 +1,7 @@
 FROM node:4.2.2
 
-COPY package.json /src/package.json
-RUN cd /src; npm install
+COPY package.json /app/package.json
+RUN cd /app; npm install
 
 COPY . /app
 

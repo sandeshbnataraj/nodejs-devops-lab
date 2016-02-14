@@ -5,6 +5,7 @@ import dbWrapper from '../src/db-postgres';
 
 const DB_URL = process.env.DB_URL || 'postgres://testuser:123456@localhost:5432/postgres';
 
+console.log(DB_URL);
 const dropTable = function() {
   return new Promise((resolve, reject) => {
     pg.connect(DB_URL, (err, client, done) => {
