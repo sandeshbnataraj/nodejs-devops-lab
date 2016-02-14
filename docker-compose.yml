@@ -1,0 +1,13 @@
+db:
+  image: postgres:9.5.0
+  environment:
+    - POSTGRES_PASSWORD=123456
+    - POSTGRES_USER=testuser
+  container_name: 'sample-postgres'
+  net: 'sample-network'
+web:
+  build: .
+  ports:
+    - "3000:3000"
+  links:
+    - db
