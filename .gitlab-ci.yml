@@ -8,4 +8,5 @@ test:
   services:
     - postgres:9.5.0
   script:
-  - /bin/bash ./scripts/docker-tests.sh
+   - npm install
+   - /bin/bash ./scripts/docker-tests.sh
