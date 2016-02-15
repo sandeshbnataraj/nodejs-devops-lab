@@ -1,18 +1,11 @@
-stages:
-  - test
-  - cleanup
+image: node:4.2.2
 
-app_test:
-  stage: test
+variables:
+  - POSTGRES_PASSWORD=123456
+  - POSTGRES_USER=testuser
+
+test:
+  services:
+    - postgres:9.5.0
   script:
-    - docker-compose build
-    - docker-compose up node
-    - exit $(docker-compose ps | grep -c "Exit 1")
-
-
-cleanup_job:
-  stage: cleanup
-  script:
-    - docker-compose stop
-    - docker-compose rm -f
-  when: always
+  - /bin/bash ./scripts/docker-tests.sh
