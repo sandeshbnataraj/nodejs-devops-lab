@@ -8,6 +8,6 @@ services:
     container_name: postgres-db
   node:
     build: .
-    command: /bin/bash ./scripts/docker-tests.sh
+    command: /bin/bash -c 'echo leaving'
     depends_on:
       - db
