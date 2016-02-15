@@ -39,10 +39,16 @@ describe('testing waterfall', () => {
     expect(typeof p.then).toEqual('function');
   });
 
-  it('should return throw error if all items in function array are not functions', (done) => {
+  it('should throw error if all items in function array are not functions', (done) => {
     expect(() => {
       let p = waterfall([function(){}, 3])
     }).toThrow();
     done();
+  });
+
+  it('should  throw error no arguments given', () => {
+    expect(() => {
+      let p = waterfall()
+    }).toThrow();
   });
 });
