@@ -1,18 +1,23 @@
-image: node:4.2.2
-
-variables:
-  POSTGRES_PASSWORD: '123456'
-  POSTGRES_USER: 'testuser'
+stages:
+- test
+- cleanup
 
 before_script:
-  - npm install
+  - docker-compose build
+  - docker-compose up -d
 
-test_async:
+async_test:
+  stage: test
   script:
-    - node ./specs/start.js ./specs/async.spec.js
+    - docker-compose run --rm --no-deps node /bin/bash ./scripts/docker-tests.sh ./specs/async.spec.js
 
-test_db:
-  services:
-    - postgres:9.5.0
+db_test:
+  stage: test
   script:
-   - /bin/bash ./scripts/docker-tests.sh
+    - docker-compose run --rm node /bin/bash ./scripts/docker-tests.sh ./specs/db-postgres.spec.js
+cleanup_job:
+  stage: cleanup
+  script:
+    - docker-compose stop
+    - docker-compose rm -f
+  when: always
