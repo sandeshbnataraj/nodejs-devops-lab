@@ -4,9 +4,15 @@ variables:
   POSTGRES_PASSWORD: '123456'
   POSTGRES_USER: 'testuser'
 
-test:
+before_script:
+  - npm install
+
+test_async:
+  script:
+    - node ./specs/start.sh ./specs/async.spec.js
+    
+test_db:
   services:
     - postgres:9.5.0
   script:
-   - npm install
    - /bin/bash ./scripts/docker-tests.sh
