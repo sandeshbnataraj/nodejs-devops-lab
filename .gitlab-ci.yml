@@ -9,4 +9,4 @@ test:
     - postgres:9.5.0
   script:
    - npm install
-   - /bin/bash ./scripts/docker-tests.sh
+   - node ./specs/start.js
