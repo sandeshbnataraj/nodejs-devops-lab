@@ -1,9 +1,12 @@
 image: node:4.2.2
 
+services:
+  - postgres:9.5.0
+
 variables:
+  POSTGRES_DB: postgres
   POSTGRES_USER: MY_DB_USER
   POSTGRES_PASSWORD: MY_DB_PASS
-  POSTGRES_DB: postgres
 
 cache:
   untracked: true
@@ -11,8 +14,6 @@ cache:
   - node_modules/
 
 test:
-  services:
-    - postgres:9.5.0
   script:
    - npm install
    - node ./specs/start.js
