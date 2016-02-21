@@ -4,6 +4,10 @@ variables:
   POSTGRES_USER: MY_DB_USER
   POSTGRES_PASSWORD: MY_DB_PASS
 
+cache:
+  paths:
+  - node_modules/
+  
 test:
   services:
     - postgres:9.5.0

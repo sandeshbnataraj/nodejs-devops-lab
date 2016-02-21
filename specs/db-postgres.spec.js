@@ -11,6 +11,7 @@ import {
 } from './helpers/db-postgres-helper';
 
 const DB_URL = `postgres://${process.env.MY_DB_USER}:${process.env.MY_DB_PASS}@postgres:5432/postgres`
+console.log(DB_URL);
 
 describe('testing initialization', () => {
   beforeEach((done) => {
