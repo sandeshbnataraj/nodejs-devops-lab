@@ -3,8 +3,10 @@ image: node:4.2.2
 variables:
   POSTGRES_USER: MY_DB_USER
   POSTGRES_PASSWORD: MY_DB_PASS
+  POSTGRES_DB: postgres
 
 cache:
+  untracked: true
   paths:
   - node_modules/
 
