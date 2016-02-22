@@ -3,7 +3,7 @@
 var pg = require('pg');
 var Promise = require('promise');
 
-var DB_URL = process.env.DB_URL || 'postgres://testuser:123456@localhost:5432/postgres';
+const DB_URL = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/postgres`
 
 var client = new pg.Client(DB_URL);
 client.connect((err) => {

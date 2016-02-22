@@ -3,7 +3,7 @@
 import pg from 'pg';
 import Promise from 'promise';
 
-const DB_URL = `postgres://${process.env.MY_DB_USER}:${process.env.MY_DB_PASS}@${process.env.MY_DB_HOST}/postgres`
+const DB_URL = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/postgres`
 
 export function dropTable() {
   return new Promise((resolve, reject) => {
