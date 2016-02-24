@@ -1,9 +1,5 @@
 image: node:4.2.2
 
-variables:
-  POSTGRES_USER: $DB_USER
-  POSTGRES_PASSWORD: $DB_PASS
-
 cache:
   untracked: true
   paths:

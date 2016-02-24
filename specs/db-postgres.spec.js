@@ -10,8 +10,10 @@ import {
   checkTableExists
 } from './helpers/db-postgres-helper';
 
-const DB_URL = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/postgres`
-console.log(DB_URL);
+const DB_USER = process.env.DB_USER || 'postgres';
+const DB_PASS = process.env.DB_PASS || '';
+const DB_HOST = process.env.DB_HOST || 'postgres:5432';
+const DB_URL = `postgres://${DB_USER}:${DB_PASS}@${DB_HOST}/postgres`;
 
 describe('testing initialization', () => {
   beforeEach((done) => {
