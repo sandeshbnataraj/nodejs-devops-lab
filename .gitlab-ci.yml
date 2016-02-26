@@ -1,7 +1,6 @@
 image: node:4.2.2
 
 cache:
-  untracked: true
   paths:
   - node_modules/
 
@@ -14,8 +13,7 @@ test_async:
    - npm install
    - node ./specs/start.js ./specs/async.spec.js
   tags:
-    - postgres
-    - node
+    - docker
 
 test_db:
   stage: test
@@ -25,5 +23,4 @@ test_db:
    - npm install
    - node ./specs/start.js ./specs/db-postgres.spec.js
   tags:
-    - postgres
-    - node
+    - docker
