@@ -1,6 +1,8 @@
 # Sample NodeJS Project for GitLab Runner
 
-This is NodeJS project that accompanies my guest blog post on Gitlab.com. Link TBA.
+This is NodeJS project that accompanies my guest
+[blog post](https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/)
+on Gitlab.com.
 
 It contains two independent modules to be tested with GitLab Runner.
 
