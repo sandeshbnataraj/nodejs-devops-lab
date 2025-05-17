@@ -2,13 +2,14 @@ stages:
   - build
   - test
 
-.node:build:
+node:build:
   stage: build
   image: node:4.2.2  # version to be compatible with package.json
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
-    - npm install # installs dependencies looking into the package.json
+    #- npm install # installs dependencies looking into the package.json
+    - npm ci --only=production # only the installs dependencies not dev dependecies and delete exsisting node modules if exsists
   script:
     - echo "node env"
     - node index.js
@@ -20,7 +21,7 @@ stages:
       - node_modules/
     policy: pull-push  # default; we can use only push or pull
 
-dockerize:node:
+.dockerize:node:
   stage: build
   image: docker:latest
   services:
