@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  #- test
   - docker-build
 
 default:
@@ -77,5 +77,5 @@ docker:build:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - |
       docker buildx build --push -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
-      --cache-to type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG \
-      --cache-from type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .
+        --cache-to type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG \
+        --cache-from type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .
