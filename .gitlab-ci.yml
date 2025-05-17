@@ -31,16 +31,25 @@ default:
       #- node_modules/  # cannot cacahe node_modules when using npm ci since it deletes on each install need to cache .npm
     policy: pull-push  # default; we can use only push or pull
 
-node:test:
+node:test_async:
   stage: test
   before_script:
-    - ls -la
     - npm install --package-lock-only
     - npm ci
   script:
-    - echo "Testing the application"
+    - echo "Testing the async application"
     - node ./specs/start.js ./specs/async.spec.js
 
+node:test_db:
+  stage: test
+  before_script:
+    - npm install --package-lock-only
+    - npm ci
+  services:
+    - postgres:9.5.0
+  script:
+    - echo "Testing the DB"
+    - node ./specs/start.js ./specs/db-postgres.spec.js
 
 .dockerize:node:
   stage: build
