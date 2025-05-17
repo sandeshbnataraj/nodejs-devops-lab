@@ -29,7 +29,7 @@ node:build:
       #- node_modules/  # cannot cacahe node_modules when using npm ci since it deletes on each install need to cache .npm
     policy: pull-push  # default; we can use only push or pull
 
-.dockerize:node:
+dockerize:node:
   stage: build
   image: docker:latest
   services:
