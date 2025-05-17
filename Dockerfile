@@ -4,14 +4,18 @@ WORKDIR /app
 
 COPY package.json package.json
 
-RUN npm ci --only=production
+RUN npm install --package-lock-only
+
+RUN npm ci --omit=dev
 
 COPY . .
 
 FROM gcr.io/distroless/nodejs24-debian12
 
-COPY --from=build /app/index.js /app/package.json /app/src/ /app/
+WORKDIR /app
 
-RUN npm ci --only=production
+COPY --from=build /app/index.js ./
+COPY --from=build /app/src/ ./src/
+
 
 ENTRYPOINT [ "node", "index.js" ]
