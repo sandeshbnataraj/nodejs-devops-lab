@@ -33,6 +33,8 @@ node:build:
 
 node:test:
   stage: test
+  before_script:
+    - npm ci
   script:
     - echo "Testing the application"
     - node specs/start.js
