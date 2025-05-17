@@ -76,6 +76,9 @@ docker:build:
         - "--storage-driver=overlayfs"  # This configuration ensures that Docker uses the overlayfs storage driver, which is compatible with the containerd-snapshotter.
         - "--feature"  # to enable the containerd iamge store, becuase with the defaul image store it cannot save the cache image
         - "containerd-snapshotter=true"
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   before_script:
     - docker info
     - docker info -f '{{ .DriverStatus }}'
