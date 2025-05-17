@@ -72,6 +72,7 @@ docker:build:
   needs: []  # to have it run independt of previous jobs
   services:
     - name: docker:24.0.7-dind
+      alias: docker
       command:
         - "--storage-driver=overlayfs"  # This configuration ensures that Docker uses the overlayfs storage driver, which is compatible with the containerd-snapshotter.
         - "--feature"  # to enable the containerd iamge store, becuase with the defaul image store it cannot save the cache image
