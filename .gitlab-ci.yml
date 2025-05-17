@@ -5,6 +5,8 @@ stages:
 node:build:
   stage: build
   image: node:24  # version to be compatible with package.json
+  variables:
+    NPM_CACHE_DIR: "$CI_PROJECT_DIR/.npm"
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
@@ -20,9 +22,11 @@ node:build:
   cache: # cache the installations based on key file; cache is changed only if the file changes
     key:
       files:
-        - package.json
+        - package.json 
     paths:
-      - node_modules/
+      - .npm/
+      - package-lock.json
+      #- node_modules/  # cannot cacahe node_modules when using npm ci since it deletes on each install need to cache .npm
     policy: pull-push  # default; we can use only push or pull
 
 .dockerize:node:
