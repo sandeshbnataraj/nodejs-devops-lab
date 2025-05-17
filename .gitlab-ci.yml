@@ -71,7 +71,13 @@ docker:build:
   image: docker:latest
   needs: []  # to have it run independt of previous jobs
   services:
-    - docker:dind
+    - name: docker:dind
+      command:
+        - "--feature"
+        - "containerd-snapshotter=true"
+  before_script:
+    - docker info
+    - docker info -f '{{ .DriverStatus }}'
   script:
     - echo "docker build with cache..."
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
