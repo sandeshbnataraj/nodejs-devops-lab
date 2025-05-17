@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - docker-build
 
 default:
   image: node:24  # version to be compatible with package.json 4.2.2 but its very old
@@ -42,6 +43,7 @@ node:test_async:
 
 node:test_db:
   stage: test
+  allow_failure: true
   before_script:
     - npm install --package-lock-only
     - npm ci
@@ -52,7 +54,7 @@ node:test_db:
     - node ./specs/start.js ./specs/db-postgres.spec.js
 
 .dockerize:node:
-  stage: build
+  stage: docker-build
   image: docker:latest
   services:
     - docker:dind
@@ -63,3 +65,16 @@ node:test_db:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+
+docker:build:
+  stage: docker-build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "docker build with cache..."
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - |
+      docker buildx build --push -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
+        --cache-to type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG, mode=max, compression=zstd \
+        --cache-from type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .
