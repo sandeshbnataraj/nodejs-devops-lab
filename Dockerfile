@@ -1,6 +1,4 @@
-FROM node:4.2.2 AS build
-
-ENV CONTAINERD_ENABLE_DEPRECATED_PULL_SCHEMA_1_IMAGE=1
+FROM node:23-alpine AS build
 
 WORKDIR /app
 
