@@ -2,9 +2,11 @@ stages:
   - build
   - test
 
+default:
+  image: node:24  # version to be compatible with package.json 4.2.2 but its very old
+
 node:build:
   stage: build
-  image: node:24  # version to be compatible with package.json
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
   before_script:
@@ -29,7 +31,14 @@ node:build:
       #- node_modules/  # cannot cacahe node_modules when using npm ci since it deletes on each install need to cache .npm
     policy: pull-push  # default; we can use only push or pull
 
-dockerize:node:
+node:test:
+  stage: test
+  script:
+    - echo "Testing the application"
+    - node specs/start.js
+
+
+.dockerize:node:
   stage: build
   image: docker:latest
   services:

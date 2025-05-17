@@ -5,12 +5,13 @@ WORKDIR /app
 COPY package.json package.json
 
 RUN npm install --package-lock-only
-#ENV NODE_ENV=production  alos an option instead of omit
+#ENV NODE_ENV=production  alos an option with npm install to omit dev dependenciss like npm ci
 RUN npm ci --omit=dev
 
 COPY . .
 
-FROM gcr.io/distroless/nodejs24-debian12
+#distroless image increases security and reduced size
+FROM gcr.io/distroless/nodejs24-debian12 
 
 WORKDIR /app
 
