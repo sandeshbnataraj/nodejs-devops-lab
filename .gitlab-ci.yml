@@ -8,8 +8,10 @@ node:build:
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
+    - ls -la
     - npm install # installs dependencies looking into the package.json
   script:
     - echo "node env"
-    - node -v
+    - ls -la
     - node index.js
+    - ls -la
