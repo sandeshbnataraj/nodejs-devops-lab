@@ -19,3 +19,16 @@ node:build:
     paths:
       - node_modules/
     policy: pull-push  # default; we can use only push or pull
+
+dockerize:node:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "building the image"
+    - $CI_REGISTRY
+    - $CI_REGISTRY_IMAGE
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
