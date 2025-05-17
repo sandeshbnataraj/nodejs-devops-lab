@@ -7,4 +7,4 @@ node:build:
   image: node:22
   script:
     - echo "node env"
-    - node -V
+    - node -v
