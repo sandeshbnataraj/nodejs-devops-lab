@@ -5,6 +5,10 @@ stages:
 node:build:
   stage: build
   image: node:22
+  before_script:
+    - node -v # get the node version
+    - npm -v # get npm version toolkit manager
+    - npm install # installs dependencies looking into the package.json
   script:
     - echo "node env"
     - node -v
