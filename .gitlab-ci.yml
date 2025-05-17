@@ -5,7 +5,7 @@ stages:
 default:
   image: node:24  # version to be compatible with package.json 4.2.2 but its very old
 
-node:build:
+.node:build:
   stage: build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
@@ -39,7 +39,7 @@ node:test:
     - npm ci
   script:
     - echo "Testing the application"
-    - node specs/start.js
+    - node ./specs/start.js ./specs/async.spec.js
 
 
 .dockerize:node:
