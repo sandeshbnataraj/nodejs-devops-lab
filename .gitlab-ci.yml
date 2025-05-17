@@ -9,10 +9,13 @@ node:build:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
     #- npm install # installs dependencies looking into the package.json
-    - npm ci --only=production # only the installs dependencies not dev dependecies and delete exsisting node modules if exsists
+    - ls -la
+    - npm ci --omit=dev #--only=production # only the installs dependencies not dev dependecies and delete exsisting node modules if exsists
+    - ls -la
   script:
     - echo "node env"
     - node index.js
+    - ls -la
   cache: # cache the installations based on key file; cache is changed only if the file changes
     key:
       files:
