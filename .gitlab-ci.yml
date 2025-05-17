@@ -10,6 +10,7 @@ node:build:
     - npm -v # get npm version toolkit manager
     #- npm install # installs dependencies looking into the package.json
     - ls -la
+    - npm install --package-lock-only  # to generate pakage lock file since npm ci sowrks only if there is apckage lock file
     - npm ci --omit=dev #--only=production # only the installs dependencies not dev dependecies and delete exsisting node modules if exsists
     - ls -la
   script:
