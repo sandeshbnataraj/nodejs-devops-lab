@@ -34,6 +34,8 @@ node:build:
 node:test:
   stage: test
   before_script:
+    - ls -la
+    - npm install --package-lock-only
     - npm ci
   script:
     - echo "Testing the application"
