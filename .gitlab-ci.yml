@@ -12,7 +12,7 @@ node:build:
   script:
     - echo "node env"
     - node index.js
-  cache: # cache the installations based on key file
+  cache: # cache the installations based on key file; cache is changed only if the file changes
     key:
       files:
         - package.json
