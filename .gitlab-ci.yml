@@ -83,6 +83,8 @@ docker:build:
     - echo "docker build with cache..."
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - |
+      docker buildx create --name my-builder --use --driver docker-container
+      docker buildx inspect --bootstrap
       docker buildx build --push -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
         --cache-to type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG \
         --cache-from type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .

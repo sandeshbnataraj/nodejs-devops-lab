@@ -11,10 +11,10 @@ RUN npm ci --omit=dev
 COPY . .
 
 #distroless image increases security and reduced size
-#FROM gcr.io/distroless/nodejs24-debian12 
+FROM gcr.io/distroless/nodejs24-debian12 
 
-#WORKDIR /app
+WORKDIR /app
 
-#COPY --from=build /app/index.js /app/src /app/node_modules ./
+COPY --from=build /app/index.js /app/src /app/node_modules ./
 
 ENTRYPOINT [ "node", "index.js" ]
