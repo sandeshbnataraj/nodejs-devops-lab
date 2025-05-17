@@ -8,10 +8,14 @@ node:build:
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
-    - ls -la
     - npm install # installs dependencies looking into the package.json
   script:
     - echo "node env"
-    - ls -la
     - node index.js
-    - ls -la
+  cache: # cache the installations based on key file
+    key:
+      files:
+        - package.json
+    paths:
+      - node_modules/
+    policy: pull-push  # default; we can use only push or pull
