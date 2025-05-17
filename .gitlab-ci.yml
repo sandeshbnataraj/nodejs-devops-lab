@@ -8,3 +8,4 @@ node:build:
   script:
     - echo "node env"
     - node -v
+    - node index.js
