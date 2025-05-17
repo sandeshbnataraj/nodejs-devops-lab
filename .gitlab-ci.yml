@@ -6,7 +6,7 @@ node:build:
   stage: build
   image: node:24  # version to be compatible with package.json
   variables:
-    NPM_CACHE_DIR: "$CI_PROJECT_DIR/.npm"
+    NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
