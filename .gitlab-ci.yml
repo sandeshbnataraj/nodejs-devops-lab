@@ -4,7 +4,7 @@ stages:
 
 node:build:
   stage: build
-  image: node:22
+  image: node:4.2.2  # version to be compatible with package.json
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
