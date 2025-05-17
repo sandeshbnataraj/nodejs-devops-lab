@@ -73,10 +73,12 @@ docker:build:
   services:
     - name: docker:24.0.7-dind
       alias: docker
+      entrypoint: ["env", "-u", "DOCKER_HOST"]
       command:
         - "--storage-driver=overlayfs"  # This configuration ensures that Docker uses the overlayfs storage driver, which is compatible with the containerd-snapshotter.
         - "--feature"  # to enable the containerd iamge store, becuase with the defaul image store it cannot save the cache image
         - "containerd-snapshotter=true"
+        - "dockerd-entrypoint.sh"
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
