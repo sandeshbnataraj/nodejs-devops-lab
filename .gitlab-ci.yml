@@ -69,6 +69,7 @@ node:test_db:
 docker:build:
   stage: docker-build
   image: docker:latest
+  needs: []  # to have it run independt of previous jobs
   services:
     - docker:dind
   script:
@@ -76,5 +77,5 @@ docker:build:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - |
       docker buildx build --push -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
-        --cache-to type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG, mode=max, compression=zstd \
+        --cache-to type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG \
         --cache-from type=registry, ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .
