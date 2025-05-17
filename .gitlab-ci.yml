@@ -82,6 +82,8 @@ docker:build:
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
+  tags:
+    - aws-ec2
   before_script:
     - docker info
     - docker info -f '{{ .DriverStatus }}'
