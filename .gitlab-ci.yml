@@ -69,7 +69,7 @@ default:
 docker:build:
   stage: docker-build
   image: docker:24.0.7-cli
-  needs: []  # to have it run independt of previous jobs
+  #needs: []  # to have it run independt of previous jobs
   services:
     - name: docker:24.0.7-dind
       alias: docker
