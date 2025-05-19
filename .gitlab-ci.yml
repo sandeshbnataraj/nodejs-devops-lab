@@ -6,7 +6,7 @@ stages:
 default:
   image: node:24  # version to be compatible with package.json 4.2.2 but its very old
 
-.node:build:
+node:build:
   stage: build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
@@ -66,7 +66,7 @@ default:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
-docker:build:
+.docker:build:
   stage: docker-build
   image: docker:24.0.7-cli
   #needs: []  # to have it run independt of previous jobs
