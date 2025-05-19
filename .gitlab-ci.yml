@@ -111,3 +111,10 @@ docker:cache:build:
     #Inside GitLab CI, you should create and use a separate builder instance, because the default one (docker build) often doesn’t support --cache-to=registry
     - docker buildx create --name mybuilder --use
     - docker buildx inspect --bootstrap
+    - |
+      docker buildx build \
+        --cache-from=type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
+        --cache-to=type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
+        --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
+        --push \
+        .
