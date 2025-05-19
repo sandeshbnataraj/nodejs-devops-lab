@@ -8,7 +8,7 @@ default:
   #tags:
   #  - aws-ec2
 
-.node:build:
+node:build:
   stage: build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
@@ -30,7 +30,7 @@ default:
         - package.json 
     paths:
       - .npm/
-      - package-lock.json
+      - ./package-lock.json
       #- node_modules/  # cannot cacahe node_modules when using npm ci since it deletes on each install need to cache .npm
     policy: pull-push  # default; we can use only push or pull
 
@@ -68,7 +68,7 @@ default:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
-.docker:build:
+.docker:build:  # did not work idgnore
   stage: docker-build
   image: docker:24.0.7-cli
   #needs: []  # to have it run independt of previous jobs
@@ -111,6 +111,8 @@ docker:cache:build:
     #Inside GitLab CI, you should create and use a separate builder instance, because the default one (docker build) often doesn’t support --cache-to=registry
     - docker buildx create --name mybuilder --use
     - docker buildx inspect --bootstrap
+    # Print the builder’s info (e.g., supported platforms, cache support, driver)
+    # --bootstrap ensures the BuildKit node is started and warmed up
     - |
       docker buildx build \
         --cache-from type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
