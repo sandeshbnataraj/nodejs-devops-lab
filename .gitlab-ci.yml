@@ -5,13 +5,13 @@ stages:
 
 default:
   image: node:24  # version to be compatible with package.json 4.2.2 but its very old
+  tags:
+    - aws-ec2
 
 node:build:
   stage: build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
-  tags:
-    - aws-ec2
   before_script:
     - node -v # get the node version
     - npm -v # get npm version toolkit manager
@@ -55,7 +55,7 @@ node:build:
     - echo "Testing the DB"
     - node ./specs/start.js ./specs/db-postgres.spec.js
 
-.dockerize:node:
+dockerize:node:
   stage: docker-build
   image: docker:latest
   services:
