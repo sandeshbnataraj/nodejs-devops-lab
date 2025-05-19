@@ -123,11 +123,39 @@ default:
 # Configure SAST
 include:
   - template: Jobs/SAST.gitlab-ci.yml # SAST (Static Application Security Testing)
-  - template: Jobs/Dependency-Scanning.gitlab-ci.yml # Dependency Scanning
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml # Dependency Scanning; package-lock.json ifile sis needed for it to run
   - template: Jobs/Container-Scanning.gitlab-ci.yml # Container Scanning
 
 variables:
   CS_IMAGE: "registry.gitlab.com/sandesh-lab/nodejs:3163ca16"  # For container scanning to work
+
+docker:build"multi:arch:
+  stage: docker-build
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables: 
+    DOCKER_BUILDKIT: 1
+  before_script:
+    - docker buildx ls  # check avail buildx instances
+    - docker buildx imagetools inspect node:24
+  script:
+    - echo "Building multi arch image for node..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - |
+      docker buildx create --name mybuild \
+        --driver docker-container \
+        --use \
+        --bootstrap
+    - docker buildx inspect
+    - |
+      docker buildx build \
+        --platform linux/amd64,linux/arm64 \
+        --cache-from=type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
+        --cache-to=type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
+        --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
+        --push \
+        .
 
 
 .get:pakcage:lock:
@@ -138,3 +166,4 @@ variables:
   artifacts:
     paths:
       - package-lock.json
+
