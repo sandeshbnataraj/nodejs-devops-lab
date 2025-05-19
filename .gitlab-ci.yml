@@ -126,5 +126,5 @@ include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml # Dependency Scanning
   - template: Jobs/Container-Scanning.gitlab-ci.yml # Container Scanning
 
-#variables:
-  #CS_IMAGE: "registry.gitlab.com/sandesh-lab/nodejs:3163ca16"  # For container scanning to work
+variables:
+  CS_IMAGE: "registry.gitlab.com/sandesh-lab/nodejs:3163ca16"  # For container scanning to work
