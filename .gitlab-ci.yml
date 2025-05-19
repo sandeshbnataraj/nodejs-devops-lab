@@ -128,3 +128,13 @@ include:
 
 variables:
   CS_IMAGE: "registry.gitlab.com/sandesh-lab/nodejs:3163ca16"  # For container scanning to work
+
+
+get:pakcage:lock:
+  stage: build
+  script:
+    - echo "create lock file"
+    - npm install --package-lock-only
+  artifacts:
+    paths:
+      - package-lock.json
