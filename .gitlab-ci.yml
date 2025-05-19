@@ -97,11 +97,17 @@ default:
 
 docker:cache:build:
   stage: docker-build
-  image: docker
+  image: docker:24.0.7
   services:
-    - name: docker:dind
+    - docker:24.0.7-dind
   before_script:
     - docker info
     - docker info -f '{{ .DriverStatus }}'
+  variables:
+     DOCKER_BUILDKIT: 1 # Enable BuildKit: Use docker buildx with a builder that supports pushing cache
   script: 
     - echo "docekr cache build ..."
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    #Inside GitLab CI, you should create and use a separate builder instance, because the default one (docker build) often doesn’t support --cache-to=registry
+    - docker buildx create --name mybuilder --use
+    - docker buildx inspect --bootstrap
