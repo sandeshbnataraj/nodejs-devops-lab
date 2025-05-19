@@ -8,7 +8,7 @@ default:
   #tags:
   #  - aws-ec2
 
-node:build:
+.node:build:
   stage: build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
@@ -95,7 +95,7 @@ node:build:
         --cache-to type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG \
         --cache-from type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .
 
-docker:cache:build:
+.docker:cache:build:
   stage: docker-build
   image: docker:24.0.7
   services:
@@ -120,3 +120,6 @@ docker:cache:build:
         --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
         --push \
         .
+# Configure SAST
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
