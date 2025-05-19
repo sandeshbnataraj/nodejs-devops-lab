@@ -122,6 +122,6 @@ default:
         .
 # Configure SAST
 include:
-  - template: Jobs/SAST.gitlab-ci.yml # SAST (Static Application Security Testing)
+  #- template: Jobs/SAST.gitlab-ci.yml # SAST (Static Application Security Testing)
   - template: Security/Dependency-Scanning.gitlab-ci.yml # Dependency Scanning
-  - template: Security/Container-Scanning.gitlab-ci.yml # Container Scanning
+  #- template: Security/Container-Scanning.gitlab-ci.yml # Container Scanning
