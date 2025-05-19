@@ -113,8 +113,8 @@ docker:cache:build:
     - docker buildx inspect --bootstrap
     - |
       docker buildx build \
-        --cache-from=type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
-        --cache-to=type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
+        --cache-from type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
+        --cache-to type=registry,ref=$CI_REGISTRY_IMAGE/cache:latest \
         --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
         --push \
         .
