@@ -5,10 +5,10 @@ stages:
 
 default:
   image: node:24  # version to be compatible with package.json 4.2.2 but its very old
-  tags:
-    - aws-ec2
+  #tags:
+  #  - aws-ec2
 
-node:build:
+.node:build:
   stage: build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"  # to override cache dir from root to local project dir
@@ -55,7 +55,7 @@ node:build:
     - echo "Testing the DB"
     - node ./specs/start.js ./specs/db-postgres.spec.js
 
-dockerize:node:
+.dockerize:node:
   stage: docker-build
   image: docker:latest
   services:
@@ -82,8 +82,6 @@ dockerize:node:
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
-  tags:
-    - aws-ec2
   before_script:
     - docker info
     - docker info -f '{{ .DriverStatus }}'
@@ -96,3 +94,14 @@ dockerize:node:
       docker buildx build --push -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA \
         --cache-to type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG \
         --cache-from type=registry,ref=$CI_REGISTRY_IMAGE/cache-image:$CI_COMMIT_REF_SLUG .
+
+docker:cache:build:
+  stage: docker-build
+  image: docker
+  services:
+    - name: docker:dind
+  before_script:
+    - docker info
+    - docker info -f '{{ .DriverStatus }}'
+  script: 
+    - echo "docekr cache build ..."
