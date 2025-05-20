@@ -127,9 +127,9 @@ include:
   - template: Jobs/Container-Scanning.gitlab-ci.yml # Container Scanning
 
 variables:
-  CS_IMAGE: "registry.gitlab.com/sandesh-lab/nodejs:3163ca16"  # For container scanning to work
+  CS_IMAGE: "registry.gitlab.com/sandesh-lab/nodejs:68671f27"  # For container scanning to work
 
-docker:build"multi:arch:
+.docker:build"multi:arch:
   stage: docker-build
   image: docker:24.0.7
   services:
